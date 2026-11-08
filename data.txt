@@ -1,0 +1,12 @@
+1001|Ayesha Khan|cpp,python,sql,git|2|2
+1002|Hamza Ali|java,sql,javascript|4|2
+1003|Sana Malik|python,ml,sql|3|3
+1004|Usman Tariq|html,css,javascript,react|1|2
+1005|Fatima Noor|cpp,java,git|0|2
+1006|Bilal Ahmed|python,networking,sql|5|2
+1007|Zainab Riaz|ml,python,cpp|2|3
+1008|Ali Raza|javascript,nodejs,react,git|3|2
+1009|Hira Siddiqui|java,python,sql,git|6|3
+1010|Daniyal Shah|html,css,javascript|1|1
+1011|Maryam Javed|python,ml,git,sql|1|2
+1012|Omar Farooq|cpp,networking,git|4|2

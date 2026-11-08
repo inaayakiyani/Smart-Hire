@@ -1,0 +1,8 @@
+2001|C++ Developer|cpp,git|2|2
+2002|Data Scientist|python,ml,sql|2|3
+2003|Frontend Developer|html,css,javascript,react|1|2
+2004|Backend Developer|java,sql,git|3|2
+2005|Network Engineer|networking,python|3|2
+2006|Junior Web Developer|html,css,javascript|0|1
+2007|Machine Learning Engineer|python,ml,cpp|2|3
+2008|Full Stack Developer|javascript,nodejs,react,sql|3|2
