@@ -1,96 +1,54 @@
 #include <iostream>
 #include "candidate.h"
-#include "avl.h"
+#include "job.h"
+#include "scoring.h"
 
 using namespace std;
 
 int main()
 {
-    AVL a;
+    Job j;
+    j.id = 2004;
+    j.title = "Backend Developer";
+    j.requiredSkills[0] = "java";
+    j.requiredSkills[1] = "sql";
+    j.requiredSkills[2] = "git";
+    j.requiredSkillCount = 3;
+    j.minYears = 3;
+    j.minEducation = 2;
 
-    for (int i = 1; i <= 5; i++)
-    {
-        Candidate c;
-        c.id = i;
-        c.yearsExperience = i;
-        a.insert(c);
-    }
-    a.inOrder();
-    cout << a.height() << endl;
+    Candidate hira;
+    hira.skills[0] = "java";
+    hira.skills[1] = "python";
+    hira.skills[2] = "sql";
+    hira.skills[3] = "git";
+    hira.skillCount = 4;
+    hira.yearsExperience = 6;
+    hira.education = 3;
 
-    AVL b;
-    int bx[] = {3, 1, 2};
+    Candidate fatima;
+    fatima.skills[0] = "cpp";
+    fatima.skills[1] = "java";
+    fatima.skills[2] = "git";
+    fatima.skillCount = 3;
+    fatima.yearsExperience = 0;
+    fatima.education = 2;
 
-    for (int i = 0; i < 3; i++)
-    {
-        Candidate c;
-        c.id = i + 1;
-        c.yearsExperience = bx[i];
-        b.insert(c);
-    }
+    Candidate usman;
+    usman.skills[0] = "html";
+    usman.skills[1] = "css";
+    usman.skills[2] = "javascript";
+    usman.skills[3] = "react";
+    usman.skillCount = 4;
+    usman.yearsExperience = 1;
+    usman.education = 2;
 
-    cout << b.height() << endl;
+    Job open;
 
-    AVL d;
-
-    for (int i = 1; i <= 15; i++)
-    {
-        Candidate c;
-        c.id = i;
-        c.yearsExperience = i;
-        d.insert(c);
-    }
-
-    cout << d.height() << endl;
-
-    AVL e;
-    int ex[] = {3, 3, 3, 1, 5};
-
-    for (int i = 0; i < 5; i++)
-    {
-        Candidate c;
-        c.id = i + 1;
-        c.yearsExperience = ex[i];
-        e.insert(c);
-    }
-
-    e.range(3, 3);
-
-    AVL f;
-
-    for (int i = 1; i <= 7; i++)
-    {
-        Candidate c;
-        c.id = i;
-        c.yearsExperience = i;
-        f.insert(c);
-    }
-
-    f.inOrder();
-    cout << f.height() << endl;
-
-    f.remove(1, 1);
-    f.inOrder();
-    cout << f.height() << endl;
-
-    f.remove(2, 2);
-    f.inOrder();
-    cout << f.height() << endl;
-
-    f.remove(4, 4);
-    f.inOrder();
-    cout << f.height() << endl;
-
-        AVL g;
-    int gx[] = {2, 1, 3, 4};
-
-    for (int i = 0; i < 4; i++)
-    {
-        Candidate c;
-        c.id = i + 1;
-        c.yearsExperience = gx[i];
-        g.insert(c);
-    }
+    cout << calculateScore(hira, j) << endl;
+    cout << calculateScore(fatima, j) << endl;
+    cout << calculateScore(usman, j) << endl;
+    cout << calculateScore(usman, open) << endl;
 
     g.remove(1, 2);
     g.inOrder();
