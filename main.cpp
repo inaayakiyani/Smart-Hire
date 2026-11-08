@@ -50,5 +50,8 @@ int main()
     cout << calculateScore(usman, j) << endl;
     cout << calculateScore(usman, open) << endl;
 
+    g.remove(1, 2);
+    g.inOrder();
+    cout << g.height() << endl;
     return 0;
 }
