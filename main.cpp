@@ -1,46 +1,54 @@
 #include <iostream>
 #include "candidate.h"
-#include "bst.h"
+#include "job.h"
+#include "scoring.h"
 
 using namespace std;
 
 int main()
 {
-    BST tree;
-    int years[] = {5, 3, 8, 1, 4, 7, 9};
+    Job j;
+    j.id = 2004;
+    j.title = "Backend Developer";
+    j.requiredSkills[0] = "java";
+    j.requiredSkills[1] = "sql";
+    j.requiredSkills[2] = "git";
+    j.requiredSkillCount = 3;
+    j.minYears = 3;
+    j.minEducation = 2;
 
-    for (int i = 0; i < 7; i++)
-    {
-        Candidate c;
-        c.id = i + 1;
-        c.yearsExperience = years[i];
-        tree.insert(c);
-    }
+    Candidate hira;
+    hira.skills[0] = "java";
+    hira.skills[1] = "python";
+    hira.skills[2] = "sql";
+    hira.skills[3] = "git";
+    hira.skillCount = 4;
+    hira.yearsExperience = 6;
+    hira.education = 3;
 
-    tree.inOrder();
-    cout << tree.height() << endl;
-    tree.range(3, 7);
+    Candidate fatima;
+    fatima.skills[0] = "cpp";
+    fatima.skills[1] = "java";
+    fatima.skills[2] = "git";
+    fatima.skillCount = 3;
+    fatima.yearsExperience = 0;
+    fatima.education = 2;
 
-    tree.remove(1, 4);
-    tree.inOrder();
+    Candidate usman;
+    usman.skills[0] = "html";
+    usman.skills[1] = "css";
+    usman.skills[2] = "javascript";
+    usman.skills[3] = "react";
+    usman.skillCount = 4;
+    usman.yearsExperience = 1;
+    usman.education = 2;
 
-    tree.remove(3, 2);
-    tree.inOrder();
+    Job open;
 
-    tree.remove(5, 1);
-    tree.inOrder();
-
-    BST line;
-
-    for (int i = 1; i <= 5; i++)
-    {
-        Candidate c;
-        c.id = i;
-        c.yearsExperience = i;
-        line.insert(c);
-    }
-
-    cout << line.height() << endl;
+    cout << calculateScore(hira, j) << endl;
+    cout << calculateScore(fatima, j) << endl;
+    cout << calculateScore(usman, j) << endl;
+    cout << calculateScore(usman, open) << endl;
 
     return 0;
 }
