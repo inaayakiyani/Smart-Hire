@@ -1,49 +1,28 @@
 #include <iostream>
 #include "candidate.h"
-#include "job.h"
+#include "dynamicarray.h"
 
 using namespace std;
 
 int main()
 {
-    Candidate c;
+    DynamicArray list;
 
-    c.id = 1;
-    c.name = "Inaya";
-    c.yearsExperience = 2;
-    c.education = 2;
-
-    c.skills[0] = "cpp";
-    c.skills[1] = "python";
-    c.skills[2] = "git";
-    c.skillCount = 3;
-
-    Job j;
-
-    j.id = 2001;
-    j.title = "AI Developer";
-    j.minYears = 1;
-    j.minEducation = 2;
-
-    j.requiredSkills[0] = "python";
-    j.requiredSkills[1] = "ml";
-    j.requiredSkillCount = 2;
-
-    cout << "Candidate Name: " << c.name << endl;
-    cout << "Skills:" << endl;
-
-    for (int i = 0; i < c.skillCount; i++)
+    for (int i = 1; i <= 5; i++)
     {
-        cout << c.skills[i] << endl;
+        Candidate c;
+        c.id = i;
+        c.name = "Candidate" + to_string(i);
+        list.add(c);
+        cout << "Added " << i << " | size: " << list.getSize() << " | capacity: " << list.getCapacity() << endl;
     }
 
-    cout << "Job Title: " << j.title << endl;
-    cout << "Required Skills:" << endl;
-
-    for (int i = 0; i < j.requiredSkillCount; i++)
+    for (int i = 0; i < list.getSize(); i++)
     {
-        cout << j.requiredSkills[i] << endl;
+        cout << list.get(i).id << " " << list.get(i).name << endl;
     }
+
+    list.get(10);
 
     return 0;
 }
