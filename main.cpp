@@ -1,49 +1,46 @@
 #include <iostream>
 #include "candidate.h"
-#include "job.h"
+#include "bst.h"
 
 using namespace std;
 
 int main()
 {
-    Candidate c;
+    BST tree;
+    int years[] = {5, 3, 8, 1, 4, 7, 9};
 
-    c.id = 1;
-    c.name = "Inaya";
-    c.yearsExperience = 2;
-    c.education = 2;
-
-    c.skills[0] = "cpp";
-    c.skills[1] = "python";
-    c.skills[2] = "git";
-    c.skillCount = 3;
-
-    Job j;
-
-    j.id = 2001;
-    j.title = "AI Developer";
-    j.minYears = 1;
-    j.minEducation = 2;
-
-    j.requiredSkills[0] = "python";
-    j.requiredSkills[1] = "ml";
-    j.requiredSkillCount = 2;
-
-    cout << "Candidate Name: " << c.name << endl;
-    cout << "Skills:" << endl;
-
-    for (int i = 0; i < c.skillCount; i++)
+    for (int i = 0; i < 7; i++)
     {
-        cout << c.skills[i] << endl;
+        Candidate c;
+        c.id = i + 1;
+        c.yearsExperience = years[i];
+        tree.insert(c);
     }
 
-    cout << "Job Title: " << j.title << endl;
-    cout << "Required Skills:" << endl;
+    tree.inOrder();
+    cout << tree.height() << endl;
+    tree.range(3, 7);
 
-    for (int i = 0; i < j.requiredSkillCount; i++)
+    tree.remove(1, 4);
+    tree.inOrder();
+
+    tree.remove(3, 2);
+    tree.inOrder();
+
+    tree.remove(5, 1);
+    tree.inOrder();
+
+    BST line;
+
+    for (int i = 1; i <= 5; i++)
     {
-        cout << j.requiredSkills[i] << endl;
+        Candidate c;
+        c.id = i;
+        c.yearsExperience = i;
+        line.insert(c);
     }
+
+    cout << line.height() << endl;
 
     return 0;
 }
