@@ -1,28 +1,46 @@
 #include <iostream>
 #include "candidate.h"
-#include "dynamicarray.h"
+#include "bst.h"
 
 using namespace std;
 
 int main()
 {
-    DynamicArray list;
+    BST tree;
+    int years[] = {5, 3, 8, 1, 4, 7, 9};
+
+    for (int i = 0; i < 7; i++)
+    {
+        Candidate c;
+        c.id = i + 1;
+        c.yearsExperience = years[i];
+        tree.insert(c);
+    }
+
+    tree.inOrder();
+    cout << tree.height() << endl;
+    tree.range(3, 7);
+
+    tree.remove(1, 4);
+    tree.inOrder();
+
+    tree.remove(3, 2);
+    tree.inOrder();
+
+    tree.remove(5, 1);
+    tree.inOrder();
+
+    BST line;
 
     for (int i = 1; i <= 5; i++)
     {
         Candidate c;
         c.id = i;
-        c.name = "Candidate" + to_string(i);
-        list.add(c);
-        cout << "Added " << i << " | size: " << list.getSize() << " | capacity: " << list.getCapacity() << endl;
+        c.yearsExperience = i;
+        line.insert(c);
     }
 
-    for (int i = 0; i < list.getSize(); i++)
-    {
-        cout << list.get(i).id << " " << list.get(i).name << endl;
-    }
-
-    list.get(10);
+    cout << line.height() << endl;
 
     return 0;
 }
