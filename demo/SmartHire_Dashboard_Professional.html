@@ -130,8 +130,51 @@ input[type=text]:focus,input[type=number]:focus{border-color:var(--primary);outl
 .empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px;background:var(--panel)}
 .note{color:var(--muted);font-size:12px;margin-top:26px;max-width:78ch;line-height:1.7}
 [hidden]{display:none!important}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:0 2px 22px;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:18px;letter-spacing:-.4px}
+.brand-mark{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  background:var(--primary);color:#fff;font-size:18px;font-weight:800;
+  box-shadow:0 4px 10px rgba(37,99,235,.2);
+}
+.main-nav{display:flex;align-items:center;gap:5px}
+.nav-link{
+  border:0;background:transparent;color:var(--muted);padding:9px 12px;
+  border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;
+}
+.nav-link:hover,.nav-link.active{background:var(--soft);color:var(--primary)}
+.topbar-label{font-size:12px;color:var(--muted);font-weight:500}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 24px}
+.metric-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:17px 19px;box-shadow:0 2px 8px rgba(15,23,42,.025);
+  display:flex;flex-direction:column;min-height:112px;
+}
+.metric-label{font-size:12px;color:var(--muted);font-weight:600}
+.metric-value{font-size:27px;line-height:1.3;color:var(--ink);font-weight:800;margin:5px 0 2px;letter-spacing:-.7px}
+.metric-caption{font-size:11px;color:var(--muted)}
+.footer{
+  border-top:1px solid var(--line);margin-top:34px;padding:18px 2px 0;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  color:var(--muted);font-size:11px;
+}
+.footer div{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.footer strong{color:var(--ink);font-size:13px}
+
 @media(max-width:700px){
   .wrap{padding:20px 14px 40px}
+  .topbar{align-items:flex-start;flex-wrap:wrap;padding-bottom:16px}
+  .main-nav{order:3;width:100%;overflow-x:auto}
+  .nav-link{white-space:nowrap;padding:8px 10px}
+  .topbar-label{margin-left:auto;padding-top:8px}
+  .metrics{grid-template-columns:1fr;gap:9px}
+  .metric-card{min-height:0;padding:13px 16px}
+  .metric-value{font-size:23px}
+  .footer{align-items:flex-start;flex-direction:column}
   .hero{padding:26px 22px}
   .hero h1{font-size:32px}
   .hero p{font-size:14px}
@@ -148,11 +191,40 @@ input[type=text]:focus,input[type=number]:focus{border-color:var(--primary);outl
 </head>
 <body>
 <div class="wrap">
+<header class="topbar">
+  <a class="brand" href="#" aria-label="SmartHire home">
+    <span class="brand-mark">S</span>
+    <span>SmartHire</span>
+  </a>
+  <nav class="main-nav" aria-label="Main navigation">
+    <button type="button" class="nav-link active" id="navOverview">Overview</button>
+    <button type="button" class="nav-link" id="navRank">Rank candidates</button>
+    <button type="button" class="nav-link" id="navFind">Find candidates</button>
+  </nav>
+  <span class="topbar-label">Recruitment workspace</span>
+</header>
 <div class="hero">
 <h1>SmartHire</h1>
 <p>Find the best match for every job. Candidates are scored out of 100 and ranked for you.</p>
 <div class="stats"><span id="s1"></span><span id="s2"></span><span>Score: 60 skills, 25 experience, 15 education</span></div>
 </div>
+<section class="metrics" aria-label="Recruitment overview">
+  <article class="metric-card">
+    <span class="metric-label">Total candidates</span>
+    <strong class="metric-value" id="metricCandidates">—</strong>
+    <span class="metric-caption">Profiles in the candidate pool</span>
+  </article>
+  <article class="metric-card">
+    <span class="metric-label">Available positions</span>
+    <strong class="metric-value" id="metricJobs">—</strong>
+    <span class="metric-caption">Roles currently listed</span>
+  </article>
+  <article class="metric-card">
+    <span class="metric-label">Highest match score</span>
+    <strong class="metric-value" id="metricTop">—</strong>
+    <span class="metric-caption" id="metricTopCaption">Based on selected role</span>
+  </article>
+</section>
 <div class="tabs" role="tablist">
 <button role="tab" id="t1" aria-selected="true">Rank for a job</button>
 <button role="tab" id="t2" aria-selected="false">Find candidates</button>
@@ -176,6 +248,10 @@ input[type=text]:focus,input[type=number]:focus{border-color:var(--primary);outl
 <div id="found"></div>
 </div>
 <p class="note">A browser demo of the same scoring rules as the C++ program. Candidates are shortlisted when they share at least one required skill, then ordered by score, with the lower id first on a tie.</p>
+<footer class="footer">
+  <div><strong>SmartHire</strong><span>AI-Powered Recruitment &amp; Candidate Ranking System</span></div>
+  <span>Data Structures Course Project · Built with C++</span>
+</footer>
 </div>
 <script>
 const rawC=`1001|Ayesha Khan|cpp,python,sql,git|2|2
@@ -268,8 +344,26 @@ document.getElementById("t1").setAttribute("aria-selected",n===1);
 document.getElementById("t2").setAttribute("aria-selected",n===2)}
 document.getElementById("s1").textContent=`${C.length} candidates`;
 document.getElementById("s2").textContent=`${J.length} jobs`;
+document.getElementById("metricCandidates").textContent=C.length;
+document.getElementById("metricJobs").textContent=J.length;
 document.getElementById("t1").onclick=()=>showTab(1);
 document.getElementById("t2").onclick=()=>showTab(2);
+function setActiveNav(id){
+  ["navOverview","navRank","navFind"].forEach(navId=>{
+    document.getElementById(navId).classList.toggle("active",navId===id);
+  });
+}
+document.getElementById("navOverview").onclick=()=>{
+  showTab(1);setActiveNav("navOverview");window.scrollTo({top:0,behavior:"smooth"});
+};
+document.getElementById("navRank").onclick=()=>{
+  showTab(1);setActiveNav("navRank");document.getElementById("v1").scrollIntoView({behavior:"smooth",block:"start"});
+};
+document.getElementById("navFind").onclick=()=>{
+  showTab(2);setActiveNav("navFind");document.getElementById("v2").scrollIntoView({behavior:"smooth",block:"start"});
+};
+document.getElementById("t1").onclick=()=>{showTab(1);setActiveNav("navRank");};
+document.getElementById("t2").onclick=()=>{showTab(2);setActiveNav("navFind");};
 document.getElementById("jobs").onclick=e=>{
 const b=e.target.closest(".pill");
 if(!b)return;
