@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SmartHire</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F1FF;--panel:#FFFFFF;--ink:#2A1B4D;--muted:#6E6490;--line:#E4DCF7;--primary:#6C4DF6;--soft:#EDE8FF;--mint:#17B890;--sun:#F2A900;--coral:#F2566B;--mintbg:#DDF7EF;--sunbg:#FFF1CC;--coralbg:#FFE1E5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#150F2B;--panel:#20183D;--ink:#F1ECFF;--muted:#A99FD0;--line:#33295C;--primary:#9A82FF;--soft:#2D2358;--mint:#3DDBB0;--sun:#FFC94D;--coral:#FF8496;--mintbg:#153A3A;--sunbg:#3F3418;--coralbg:#4A1F33;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#150F2B;--panel:#20183D;--ink:#F1ECFF;--muted:#A99FD0;--line:#33295C;--primary:#9A82FF;--soft:#2D2358;--mint:#3DDBB0;--sun:#FFC94D;--coral:#FF8496;--mintbg:#153A3A;--sunbg:#3F3418;--coralbg:#4A1F33;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;font-weight:600}
+.wrap{max-width:980px;margin:0 auto;padding:18px 16px 56px}
+.hero{border-radius:28px;padding:34px 30px;color:#fff;background:linear-gradient(120deg,#6C4DF6 0%,#B04BE0 55%,#FF7A8A 100%);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.16)}
+.hero:before{content:"";position:absolute;right:90px;bottom:-70px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero h1{margin:0;font-size:44px;font-weight:900;letter-spacing:-.02em;position:relative}
+.hero p{margin:6px 0 18px;max-width:46ch;font-size:17px;position:relative}
+.stats{display:flex;gap:10px;flex-wrap:wrap;position:relative}
+.stats span{background:rgba(255,255,255,.22);padding:6px 14px;border-radius:999px;font-weight:800;font-size:14px}
+.tabs{display:flex;gap:8px;margin:22px 0 16px}
+.tabs button{font:inherit;font-weight:800;padding:11px 22px;border-radius:999px;border:2px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+button:focus-visible,input:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font:inherit;font-weight:800;font-size:14px;padding:8px 15px;border-radius:999px;border:2px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--soft);border-color:var(--primary);color:var(--primary)}
+.strip{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--panel);border-radius:20px;padding:16px 20px;margin:16px 0;border:2px solid var(--line)}
+.strip b{font-size:18px;font-weight:900}
+.strip .need{color:var(--muted);font-size:14px}
+.slider{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px}
+.slider input{accent-color:var(--primary);width:130px}
+.count{color:var(--muted);margin:0 0 12px;font-size:14px;font-weight:700}
+.card{display:grid;grid-template-columns:56px 1fr 78px;gap:16px;align-items:center;background:var(--panel);border:2px solid var(--line);border-radius:22px;padding:16px 18px;margin-bottom:12px}
+.card.plain{grid-template-columns:56px 1fr}
+.card.top{border-color:var(--primary);box-shadow:0 6px 0 var(--soft)}
+.avatar{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:19px}
+.name{font-weight:900;font-size:19px}
+.medal{margin-left:6px}
+.meta{color:var(--muted);font-size:14px;margin-bottom:8px;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;font-weight:800;padding:3px 11px;border-radius:999px;background:var(--soft);color:var(--primary)}
+.chip.ok{background:var(--mintbg);color:var(--mint)}
+.chip.no{background:var(--coralbg);color:var(--coral);text-decoration:line-through}
+.ring{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--c) calc(var(--p) * 1%),var(--line) 0)}
+.ring span{width:60px;height:60px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font-weight:900;font-size:22px;color:var(--c)}
+.panel{background:var(--panel);border:2px solid var(--line);border-radius:20px;padding:18px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-bottom:16px}
+label{font-weight:800;font-size:14px;display:block;margin-bottom:6px}
+input[type=text],input[type=number]{font:inherit;width:100%;padding:11px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.empty{padding:30px;text-align:center;color:var(--muted);border:2px dashed var(--line);border-radius:20px}
+.note{color:var(--muted);font-size:13px;margin-top:26px;max-width:70ch}
+@media (max-width:640px){.hero{padding:26px 20px}.hero h1{font-size:34px}.card{grid-template-columns:48px 1fr}.card .ring{grid-column:1/-1;justify-self:start}.avatar{width:48px;height:48px;font-size:16px}.panel{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+<h1>SmartHire</h1>
+<p>Find the best match for every job. Candidates are scored out of 100 and ranked for you.</p>
+<div class="stats"><span id="s1"></span><span id="s2"></span><span>Score: 60 skills, 25 experience, 15 education</span></div>
+</div>
+<div class="tabs" role="tablist">
+<button role="tab" id="t1" aria-selected="true">Rank for a job</button>
+<button role="tab" id="t2" aria-selected="false">Find candidates</button>
+</div>
+<div id="v1">
+<div class="pills" id="jobs"></div>
+<div class="strip">
+<div><b id="jt"></b><div class="need" id="req"></div></div>
+<div class="slider"><label for="k" style="margin:0">Top <span id="kv">5</span></label><input type="range" id="k" min="1" max="12" value="5"></div>
+</div>
+<p class="count" id="count"></p>
+<div id="ranked"></div>
+</div>
+<div id="v2" hidden>
+<div class="panel">
+<div><label for="sk">Skill</label><input type="text" id="sk" placeholder="for example sql"></div>
+<div><label for="mn">Min years</label><input type="number" id="mn" min="0"></div>
+<div><label for="mx">Max years</label><input type="number" id="mx" min="0"></div>
+</div>
+<p class="count" id="fcount"></p>
+<div id="found"></div>
+</div>
+<p class="note">A browser demo of the same scoring rules as the C++ program. Candidates are shortlisted when they share at least one required skill, then ordered by score, with the lower id first on a tie.</p>
+</div>
+<script>
+const rawC=`1001|Ayesha Khan|cpp,python,sql,git|2|2
+1002|Hamza Ali|java,sql,javascript|4|2
+1003|Sana Malik|python,ml,sql|3|3
+1004|Usman Tariq|html,css,javascript,react|1|2
+1005|Fatima Noor|cpp,java,git|0|2
+1006|Bilal Ahmed|python,networking,sql|5|2
+1007|Zainab Riaz|ml,python,cpp|2|3
+1008|Ali Raza|javascript,nodejs,react,git|3|2
+1009|Hira Siddiqui|java,python,sql,git|6|3
+1010|Daniyal Shah|html,css,javascript|1|1
+1011|Maryam Javed|python,ml,git,sql|1|2
+1012|Omar Farooq|cpp,networking,git|4|2`;
+const rawJ=`2001|C++ Developer|cpp,git|2|2
+2002|Data Scientist|python,ml,sql|2|3
+2003|Frontend Developer|html,css,javascript,react|1|2
+2004|Backend Developer|java,sql,git|3|2
+2005|Network Engineer|python,networking|3|2
+2006|Junior Web Developer|html,css,javascript|0|1
+2007|Machine Learning Engineer|python,ml,cpp|2|3
+2008|Full Stack Developer|javascript,nodejs,react,sql|3|2`;
+const C=rawC.split("\n").map(l=>{const p=l.split("|");return{id:+p[0],name:p[1],skills:p[2].split(","),years:+p[3],edu:+p[4]}});
+const J=rawJ.split("\n").map(l=>{const p=l.split("|");return{id:+p[0],title:p[1],skills:p[2].split(","),years:+p[3],edu:+p[4]}});
+const grads=["#6C4DF6,#9A82FF","#F2566B,#FF9A8B","#17B890,#6EE7C8","#F2A900,#FFD36B","#3B82F6,#7DB4FF","#C04BDB,#F093FB"];
+const medals=["🥇","🥈","🥉"];
+let jobIndex=3;
+function score(c,j){
+let matched=0;
+for(const s of j.skills){if(c.skills.includes(s))matched++}
+let skillScore=60;
+if(j.skills.length>0)skillScore=Math.floor(60*matched/j.skills.length);
+let expScore=25;
+if(j.years>0&&c.years<j.years)expScore=Math.floor(25*c.years/j.years);
+let eduScore=0;
+if(c.edu>=j.edu)eduScore=15;
+return skillScore+expScore+eduScore}
+function chips(c,j){
+let html="";
+for(const s of c.skills){
+if(j&&j.skills.includes(s))html+=`<span class="chip ok">✓ ${s}</span>`;
+else html+=`<span class="chip">${s}</span>`}
+if(j){for(const s of j.skills){if(!c.skills.includes(s))html+=`<span class="chip no">${s}</span>`}}
+return html}
+function avatar(c){
+const initials=c.name.split(" ").map(w=>w[0]).join("");
+return `<div class="avatar" style="background:linear-gradient(135deg,${grads[c.id%6]})">${initials}</div>`}
+function card(c,j,rank,sc){
+const yr=c.years===1?"year":"years";
+const meta=`ID ${c.id} · ${c.years} ${yr} · education level ${c.edu}`;
+if(!j){return `<div class="card plain">${avatar(c)}<div><div class="name">${c.name}</div><div class="meta">${meta}</div><div class="chips">${chips(c,null)}</div></div></div>`}
+let color="var(--coral)";
+if(sc>=50)color="var(--sun)";
+if(sc>=80)color="var(--mint)";
+let medal="";
+if(rank<=3)medal=`<span class="medal">${medals[rank-1]}</span>`;
+let cls="card";
+if(rank===1)cls="card top";
+return `<div class="${cls}">${avatar(c)}<div><div class="name">${c.name}${medal}</div><div class="meta">${meta}</div><div class="chips">${chips(c,j)}</div></div><div class="ring" style="--p:${sc};--c:${color}"><span>${sc}</span></div></div>`}
+function drawJobs(){
+document.getElementById("jobs").innerHTML=J.map((j,i)=>`<button class="pill" data-i="${i}" aria-pressed="${i===jobIndex}">${j.title}</button>`).join("")}
+function drawRank(){
+const j=J[jobIndex];
+const topK=+document.getElementById("k").value;
+document.getElementById("kv").textContent=topK;
+document.getElementById("jt").textContent=j.title;
+document.getElementById("req").textContent=`Needs ${j.skills.join(", ")} · ${j.years}+ years · education level ${j.edu}+`;
+const list=C.filter(c=>c.skills.some(s=>j.skills.includes(s))).map(c=>({c:c,sc:score(c,j)}));
+list.sort((a,b)=>b.sc-a.sc||a.c.id-b.c.id);
+const shown=list.slice(0,topK);
+document.getElementById("count").textContent=`${list.length} candidates share a required skill. Showing the top ${shown.length}.`;
+document.getElementById("ranked").innerHTML=shown.map((x,i)=>card(x.c,j,i+1,x.sc)).join("")}
+function drawFind(){
+const skill=document.getElementById("sk").value.trim().toLowerCase();
+const mnText=document.getElementById("mn").value;
+const mxText=document.getElementById("mx").value;
+let list=C.filter(c=>{
+if(skill!==""&&!c.skills.includes(skill))return false;
+if(mnText!==""&&c.years<+mnText)return false;
+if(mxText!==""&&c.years>+mxText)return false;
+return true});
+list.sort((a,b)=>a.years-b.years||a.id-b.id);
+document.getElementById("fcount").textContent=`${list.length} of ${C.length} candidates match.`;
+if(list.length===0){document.getElementById("found").innerHTML=`<div class="empty">No candidate matches. Try a different skill or widen the years.</div>`;return}
+document.getElementById("found").innerHTML=list.map(c=>card(c,null,0,0)).join("")}
+function showTab(n){
+document.getElementById("v1").hidden=n!==1;
+document.getElementById("v2").hidden=n!==2;
+document.getElementById("t1").setAttribute("aria-selected",n===1);
+document.getElementById("t2").setAttribute("aria-selected",n===2)}
+document.getElementById("s1").textContent=`${C.length} candidates`;
+document.getElementById("s2").textContent=`${J.length} jobs`;
+document.getElementById("t1").onclick=()=>showTab(1);
+document.getElementById("t2").onclick=()=>showTab(2);
+document.getElementById("jobs").onclick=e=>{
+const b=e.target.closest(".pill");
+if(!b)return;
+jobIndex=+b.dataset.i;
+drawJobs();
+drawRank()};
+document.getElementById("k").oninput=drawRank;
+["sk","mn","mx"].forEach(id=>document.getElementById(id).oninput=drawFind);
+drawJobs();
+drawRank();
+drawFind();
+</script>
+</body>
+</html>
