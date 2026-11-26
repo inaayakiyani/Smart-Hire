@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 #include "candidate.h"
 #include "job.h"
 #include "scoring.h"
@@ -149,20 +150,46 @@ int readInt()
     return value;
 }
 
+void printBanner()
+{
+    cout << "==========================================" << endl;
+    cout << "    SMARTHIRE: Candidate Ranking System   " << endl;
+    cout << "==========================================" << endl;
+}
+
+void printLine()
+{
+    cout << "+-------+------------------+-------+-----+----------------------------+" << endl;
+}
+
+void printTableHeader()
+{
+    printLine();
+    cout << "| " << left << setw(5) << "ID"
+         << " | " << setw(16) << "Name"
+         << " | " << setw(5) << "Years"
+         << " | " << setw(3) << "Edu"
+         << " | " << setw(26) << "Skills" << " |" << endl;
+    printLine();
+}
+
 void printCandidate(Candidate c)
 {
-    cout << c.id << " | " << c.name << " | " << c.yearsExperience
-         << " yrs | education " << c.education << " | skills: ";
+    string skillText = "";
 
     for (int i = 0; i < c.skillCount; i++)
     {
         if (i > 0)
-            cout << ", ";
+            skillText = skillText + ", ";
 
-        cout << c.skills[i];
+        skillText = skillText + c.skills[i];
     }
 
-    cout << endl;
+    cout << "| " << left << setw(5) << c.id
+         << " | " << setw(16) << c.name
+         << " | " << setw(5) << c.yearsExperience
+         << " | " << setw(3) << c.education
+         << " | " << setw(26) << skillText << " |" << endl;
 }
 
 void printJobs(Job jobs[], int jobCount)
@@ -211,13 +238,16 @@ void rankForJob(DynamicArray& candidates, HashTable& skillIndex, Job& job, int t
     int rank = 1;
     RankedCandidate top;
 
+    printTableHeader();
+
     while (rank <= topK)
     {
         if (!heap.extractMax(top))
             break;
 
-        cout << "#" << rank << " | score " << top.score << " | ";
+        cout << "Rank " << rank << " | Score " << top.score << endl;
         printCandidate(top.candidate);
+        printLine();
         rank++;
     }
 
@@ -250,7 +280,6 @@ int main()
     Job jobs[MAX_JOBS];
     HashTable skillIndex;
     AVL avl;
-    BST bst;
 
     if (!loadCandidates("data.txt", candidates))
     {
@@ -270,7 +299,6 @@ int main()
     {
         Candidate c = candidates.get(i);
         avl.insert(c);
-        bst.insert(c);
 
         for (int k = 0; k < c.skillCount; k++)
         {
@@ -283,22 +311,28 @@ int main()
     while (choice != 0)
     {
         cout << endl;
-        cout << "1. List all candidates" << endl;
-        cout << "2. Rank candidates for a job" << endl;
-        cout << "3. Search candidates by skill" << endl;
-        cout << "4. Candidates in an experience range" << endl;
-        cout << "5. BST vs AVL height" << endl;
-        cout << "0. Exit" << endl;
+        printBanner();
+        cout << "  1. List all candidates" << endl;
+        cout << "  2. Rank candidates for a job" << endl;
+        cout << "  3. Search candidates by skill" << endl;
+        cout << "  4. Candidates in an experience range" << endl;
+        cout << "  5. BST vs AVL height" << endl;
+        cout << "  0. Exit" << endl;
+        cout << "------------------------------------------" << endl;
         cout << "Choice: ";
 
         choice = readInt();
 
         if (choice == 1)
         {
+            printTableHeader();
+
             for (int i = 0; i < candidates.getSize(); i++)
             {
                 printCandidate(candidates.get(i));
             }
+
+            printLine();
         }
         else if (choice == 2)
         {
@@ -339,11 +373,19 @@ int main()
             int count = skillIndex.search(skill, found);
 
             if (count == 0)
-                cout << "No candidates have this skill" << endl;
-
-            for (int i = 0; i < count; i++)
             {
-                printCandidate(candidates.get(found[i]));
+                cout << "No candidates have this skill" << endl;
+            }
+            else
+            {
+                printTableHeader();
+
+                for (int i = 0; i < count; i++)
+                {
+                    printCandidate(candidates.get(found[i]));
+                }
+
+                printLine();
             }
 
             delete[] found;
